@@ -2,16 +2,32 @@
     <h3>Milestones</h3>
     <h4>Requested</h4>
     {{#each milestones 'requested'}}
-        {{title}}{{price}}
+        {{title}} {{price}}
+        {{#if isBoss}}
+        <button class='createJs'>Create Milestone</button>
+        {{/if}}
     {{/each}}
     <h4>Created</h4>
     {{#each milestones 'created'}}
-        {{title}}{{price}}
+        {{title}} {{price}}
+        {{#if isBoss}}
+            <button class='releaseJs'>Release Milestone</button>
+        {{else}}
+            <button class='releaseRequestJs'>Request Milestone</button>
+        {{/if}}
+    {{/each}}
+    <h4>Release Requests</h4>
+    {{#each milestones 'releaseRequested'}}
+        {{title}} {{price}}
+        {{#if isBoss}}
+            <button class='releaseJs'>Release Milestone</button>
+        {{/if}}
     {{/each}}
     <h4>Released</h4>
     {{#each milestones 'released'}}
-        {{title}}{{price}}
+        {{title}} {{price}}
     {{/each}}
+    
 <form id='requestMilestoneJs'>
     Request milestone
     title: <input name='title'>
