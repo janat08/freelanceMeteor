@@ -1,4 +1,4 @@
-import { Milestones} from './milestones/collection.js'
+import { Milestones } from './milestones/collection.js'
 
 
 export { Milestones }

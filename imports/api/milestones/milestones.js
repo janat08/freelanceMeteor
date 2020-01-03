@@ -10,9 +10,9 @@ Meteor.methods({
     //find project, and decide if milestone.create is to be called if userId is boss
   },
   'milestone.create' ({ _id }) {
-    //if enough money
-    //transfer money
+    //if enough money    
     //check if boss
+    //transfer money
     Milestones.update(_id, { approved: true })
   }
 });

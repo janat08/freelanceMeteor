@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { Milestones } from '/imports/api/cols.js'
 import './request.html';
 
 Template.request.onCreated(function() {
@@ -6,13 +7,13 @@ Template.request.onCreated(function() {
 });
 
 Template.request.helpers({
-  links() {
-    return
+  milestones(status) {
+    return Milestones.find({recepient: Meteor.userId(), status})
   },
 });
 
 Template.request.events({
-  'submit #createMilestoneJs' (event) {
+  'submit #requestMilestoneJs' (event) {
     event.preventDefault();
     const {
       title: { value: tV },

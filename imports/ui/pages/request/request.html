@@ -1,10 +1,21 @@
 <template name="request">
-asdf
-asdf
-
-<form id='createMilestoneJs'>
-    <input name='title'>
-    <input name='price'>
+    <h3>Milestones</h3>
+    <h4>Requested</h4>
+    {{#each milestones 'requested'}}
+        {{title}}{{price}}
+    {{/each}}
+    <h4>Created</h4>
+    {{#each milestones 'created'}}
+        {{title}}{{price}}
+    {{/each}}
+    <h4>Released</h4>
+    {{#each milestones 'released'}}
+        {{title}}{{price}}
+    {{/each}}
+<form id='requestMilestoneJs'>
+    Request milestone
+    title: <input name='title'>
+    price: <input name='price'>
     <input type='submit' value="Create Milestone">
 </form>
 </template>
