@@ -5,7 +5,7 @@ import { check } from 'meteor/check';
 import { Milestones } from '../cols.js';
 
 Meteor.methods({
-  'milestones.request' ({ title, price, projectId }) {
+  'milestones.request' ({ title, price, projectId = "1234" }) {
     const _id = Milestones.insert({ title, price, projectId, requested: true, })
     return _id
     //todo: find project, and decide if milestone.create is to be called if userId is boss

@@ -1,14 +1,17 @@
 import { Meteor } from 'meteor/meteor';
 import { Milestones } from '/imports/api/cols.js'
-import './request.html';
+import { FlowRouter } from 'meteor/kadira:flow-router';
+import './milestones.html';
 
-Template.request.onCreated(function() {
+Template.milestones.onCreated(function() {
   Meteor.subscribe('milestones.all');
 });
 
-Template.request.helpers({
+Template.milestones.helpers({
   milestones(status) {
-    const res = Milestones.find({recepient: Meteor.userId(), [status]: true}).fetch()
+    const res = Milestones.find({recepient: Meteor.userId(), [status]: true, 
+      projectId: FlowRouter.getParam('projectId')
+    }).fetch()
     return res.map(x=>{
       //todo: look for project, and bossid, to determine if can approve
       x.isBoss = Math.random() >= 0.5
@@ -17,7 +20,7 @@ Template.request.helpers({
   },
 });
 
-Template.request.events({
+Template.milestones.events({
   'submit #requestMilestoneJs' (event) {
     event.preventDefault();
     const {
