@@ -6,10 +6,10 @@ import { Transactions, Accounts } from '../cols.js';
 
 Meteor.methods({
   'accounts.create' ({ userId }) {
-    Accounts.insert({ userId, balance: 0, pendingTransactions: [] })
+    return Accounts.insert({ userId, balance: 0, pendingTransactions: [] })
   },
-  'transactions.create' ({ sourceId, destinationId, amount }) {
-    const _id = Transactions.insert({ sourceId, destinationId, amount, state: 'pending' })
+  'transactions.create' ({ sourceId, destinationId, amount, title }) {
+    const _id = Transactions.insert({ sourceId, destinationId, title, amount, state: 'pending' })
 
     const first = Accounts.update({
       sourceId,
@@ -79,7 +79,7 @@ function makeDone({ sourceId, destinationId, _id }) {
     }
   }
   if (_id) {
-    var c = Transactions.update({ _id: _id }, { $set: { state: "done" } });
+    var c = Transactions.update({ _id: _id }, { $set: { state: "done", date: new Date() } });
     if (c != 1) {
       makeDone({ _id })
     }

@@ -36,4 +36,4 @@ Meteor.methods({
   }
 });
 
-Meteor.call('mail.send', {  })
+// Meteor.call('mail.send', {  })
