@@ -1,27 +1,44 @@
+
 <template name="finances">
 <h2>Manage Transactions</h2>
-<h3>milestones, milestone requests, invoices (disabled), withdrawals (disabled), transfer funds (disabled), history (redirect to transactions), </h3>
+<h3>milestones, invoices (disabled), withdrawals (disabled), transfer funds (disabled), <a href='/transactions'>history</a> </h3>
 milestones (incoming/outgoing(number of out/in))
 employer, project name, amount, description, status, action: cancel/dispute
-milestone requests (outgoing/incoming):
-employer, project name, amount, description, actions
-
+{{#if milestones.incoming.active}}
+<button class='outgoingJs'>Outgoing {{milestones.outgoing.count}}</button>
+<button class='incomingJs'>Incoming {{milestones.incoming.count}}</button>
+{{> financesMilestones milestones=milestones.incoming.mapped}}
+{{else}}
+<button class='outgoingJs'>Outgoing {{milestones.outgoing.count}}</button>
+<button class='incomingJs'>Incoming {{milestones.incoming.count}}</button>
+{{> financesMilestones milestones=milestones.outgoing.mapped}}
+{{/if}}
 
 <h2>Profit and Loss</h2>
 Financial Position; period type drop, period drop
-<h5>income</h5>
-earnings
+<input class='picker' placeholder="Pick Start">
+<input class='pickerEnd' placeholder="Pick End">
+<h5>income accordion</h5>
+<h6>Sales</h6>
+{{#each positiveTransactions}}
+    {{type}}{{amount}}
+{{/each}}
 <h6>cost of sales</h6>
-commission
-bid promotion
+{{#each costOfSales}}
+    {{type}}{{amount}}
+{{/each}}
+TotalProfit: {{totalProfit}}
 
-<h5>expenses</h5>
-<h6>payments</h6>accordion
-project
-other
-contest
+<h5>expenses accordion</h5>
+<h6>payments </h6>
+{{#each payments}}
+    {{type}}{{amount}}
+{{/each}}
 <h6>expenses</h6>
-project commission
-membership
-total expense
+{{#each expenses}}
+    {{type}}{{amount}}
+{{/each}}
+
+TotalExpenses: {{totalExpenses}}
 </template>
+

@@ -1,6 +1,7 @@
 todo:
 financial dash,
 recursive updates on failure (nonFailureBalance)
+finish transactions acid compliance, and make sure the bookkeeping from gmail description is implemented
 
 todo:
 from field for email
@@ -11,3 +12,4 @@ done:
 notes:
 project id hardcoded
 who is boss hardcoded
+milestone requests in financial dash not included,

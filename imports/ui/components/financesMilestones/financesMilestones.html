@@ -1,0 +1,37 @@
+<template name="financesMilestones">
+    employer, project name, amount, description, status, action: cancel/dispute
+<table>
+    <tr>
+        <th>Employer</th>
+        <th>Project Name</th>
+        <th>Amount</th>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Actions</th>
+    </tr>
+        {{#each milestones}}
+    <tr>
+        <td>
+            {{creator}}
+        </td>
+        <td>
+            {{projectName}} 
+        </td>        
+        <td>
+            {{price}} 
+        </td>        
+        <td>
+            {{title}} 
+        </td>        
+        <td>
+            {{status}} 
+        </td>
+        <td>
+            //actions
+        </td>
+    </tr>
+    {{/each}}
+</table>
+
+</template>
+

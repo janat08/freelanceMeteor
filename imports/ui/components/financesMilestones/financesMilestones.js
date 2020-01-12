@@ -1,28 +1,18 @@
 import { Meteor } from 'meteor/meteor';
 import { Milestones } from '/imports/api/cols.js'
 import { FlowRouter } from 'meteor/kadira:flow-router';
-import './milestones.html';
+import './financesMilestones.html';
 
-Template.milestones.onCreated(function() {
+Template.financesMilestones.onCreated(function() {
   Meteor.subscribe('milestones.all');
   console.log(this)
 });
 
-Template.milestones.helpers({
-  milestones(status) {
-    const res = Milestones.find({recepient: Meteor.userId(), [status]: true, 
-      // projectId: FlowRouter.getParam('projectId')
-    }).fetch()
-    return res.map(x=>{
-      //todo: look for project, and bossid, to determine if can approve
-      x.isBoss = Math.random() >= 0.5
-      return x
-    })
-    return []
-  },
+Template.financesMilestones.helpers({
+
 });
 
-Template.milestones.events({
+Template.financesMilestones.events({
   'submit #requestMilestoneJs' (event) {
     event.preventDefault();
     const {
@@ -30,7 +20,7 @@ Template.milestones.events({
       price: { value: pV }
     } = event.target;
 
-    Meteor.call('milestones.request', {title: tV, price: pV, projectId: 123}, (error) => {
+    Meteor.call('milestones.request', { title: tV, price: pV, projectId: 123 }, (error) => {
       if (error) {
         alert(error.error);
       }
@@ -40,14 +30,14 @@ Template.milestones.events({
       }
     });
   },
-  'click .createJs' (event, templ){
+  'click .createJs' (event, templ) {
     console.log(this)
     Meteor.call('milestones.create', this)
   },
-  'click .releaseRequestJs' (event, templ){
+  'click .releaseRequestJs' (event, templ) {
     Meteor.call('milestones.releaseRequest', this)
   },
-  'click .releaseJs' (event, templ){
+  'click .releaseJs' (event, templ) {
     Meteor.call('milestones.release', this)
   },
 });

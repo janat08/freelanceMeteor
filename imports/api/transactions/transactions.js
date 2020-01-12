@@ -8,8 +8,9 @@ Meteor.methods({
   'accounts.create' ({ userId }) {
     return Accounts.insert({ userId, balance: 0, pendingTransactions: [] })
   },
-  'transactions.create' ({ sourceId, destinationId, amount, title }) {
-    const _id = Transactions.insert({ sourceId, destinationId, title, amount, state: 'pending' })
+  //type is for stuff like commission, bid promotion, etc designations
+  'transactions.create' ({ sourceId, destinationId, amount, title, type }) {
+    const _id = Transactions.insert({ sourceId, destinationId, title, type, date: new Date(), amount, state: 'pending' })
 
     const first = Accounts.update({
       sourceId,
