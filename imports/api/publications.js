@@ -1,4 +1,4 @@
-import {Milestones, Accounts, Transactions, Users} from './cols.js'
+import {Milestones, Accounts, Transactions, Users, Projects} from './cols.js'
 
 Meteor.publish('milestones.all', function (){
     return Milestones.find()
@@ -14,4 +14,8 @@ Meteor.publish('transactions.all', function (){
 
 Meteor.publish('users.all', function (){
     return Users.find()
+})
+
+Meteor.publish('projects.all', function(){
+    return Projects.find()
 })
