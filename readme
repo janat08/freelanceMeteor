@@ -5,6 +5,7 @@ finish transactions acid compliance, and make sure the bookkeeping from gmail de
 
 todo:
 from field for email
+the transactions terribly wrong state fix is applied, since the docs don't describe well enough detection process.
 
 done:
 
