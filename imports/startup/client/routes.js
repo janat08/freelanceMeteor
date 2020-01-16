@@ -8,6 +8,9 @@ import '../../ui/pages/finances/finances.js';
 import '../../ui/pages/info/info.js';
 import '../../ui/pages/not-found/not-found.js';
 import '../../ui/pages/transHistory/transHistory.js'
+import '../../ui/pages/createProject/createProject.js'
+import '../../ui/pages/browseProjects/browseProjects.js'
+import '../../ui/pages/project/project.js'
 
 window.SubsCache = new SubsCache(5, 10);
 
@@ -37,6 +40,27 @@ FlowRouter.route('/transactions', {
   name: 'App.home',
   action() {
     BlazeLayout.render('App_body', { main: 'transHistory' });
+  },
+});
+
+FlowRouter.route('/project/:id', {
+  name: 'App.project',
+  action() {
+    BlazeLayout.render('App_body', { main: 'project' });
+  },
+});
+
+FlowRouter.route('/projects', {
+  name: 'App.projects',
+  action() {
+    BlazeLayout.render('App_body', { main: 'browseProjects' });
+  },
+});
+
+FlowRouter.route('/createProject', {
+  name: 'App.createProject',
+  action() {
+    BlazeLayout.render('App_body', { main: 'createProject' });
   },
 });
 

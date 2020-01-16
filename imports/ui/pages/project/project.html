@@ -1,0 +1,15 @@
+<template name="project">
+{{#with project}}
+{{title}}
+{{price}}
+{{description}}
+{{#each bids}}
+12
+{{/each}}
+{{/with}}
+<form class='bidJs'>
+    description: <input name='description'>
+    price: <input name='price'>
+    <input type='submit' value='submit bid'>
+</form>
+</template>

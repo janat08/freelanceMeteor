@@ -5,4 +5,4 @@ import { Projects } from './projects/collection.js'
 
 const Users = Meteor.users
 
-export { Milestones, Mail, Users, Transactions, Accounts, Projects}
+export { Milestones, Mail, Users, Transactions, Accounts, Projects }
