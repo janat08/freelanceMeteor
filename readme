@@ -1,7 +1,10 @@
 todo:
+freelancers bid outside of list so that he doesn't have to search for it
+date for filter and sorting
+fix filtering
 financial dash,
-recursive updates on failure (nonFailureBalance)
 finish transactions acid compliance, and make sure the bookkeeping from gmail description is implemented
+milestones when bidding
 
 todo:
 from field for email
@@ -11,6 +14,7 @@ done:
 
 
 notes:
+no skills
 project id hardcoded
 who is boss hardcoded
 milestone requests in financial dash not included,

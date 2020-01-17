@@ -1,4 +1,15 @@
 <template name="browseProjects">
 
+<form class='projectFilters'>
+    price top: <input name='upperPrice'>
+    price bottom: <input name='lowerPrice'>
+    description/title: <input name='text'>
+    <input type='submit' class>
+</form>
+
+{{#each projects}}
+<br/>
+<a href='/project/{{_id}}'>{{title}}</a> {{price}}
+{{/each}}
 
 </template>

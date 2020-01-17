@@ -7,7 +7,9 @@ Template.createProject.onCreated(function() {
 });
 
 Template.createProject.helpers({
-  links() {},
+  skills() {
+    
+  },
 });
 
 Template.createProject.events({

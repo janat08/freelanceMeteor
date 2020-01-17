@@ -3,13 +3,37 @@
 {{title}}
 {{price}}
 {{description}}
-{{#each bids}}
-12
-{{/each}}
-{{/with}}
+{{#if complete}}
+
+{{else}}
+<!--i need each scope, not each in-->
+{{#if isViewedByBoss}}
+    {{#each bids}}
+        {{price}}
+        {{description}}
+        {{userId}}
+        {{#if invited}}
+        invited
+        {{else}}
+        <button class='inviteJs'>Invite</button>
+        {{/if}}
+    {{/each}}
+{{else}}
+    {{#each bids}}
+    {{price}}
+    {{description}}
+    {{userId}}
+    {{#if acceptable}}
+        <button class='acceptJs'>Accept</button>
+    {{/if}}
+    {{/each}}
+{{/if}}
 <form class='bidJs'>
     description: <input name='description'>
     price: <input name='price'>
     <input type='submit' value='submit bid'>
 </form>
+{{/if}}
+{{/with}}
+
 </template>
