@@ -22,6 +22,7 @@ Meteor.methods({
       $inc: { balance: -amount },
       $push: { pendingTransactions: _id }
     }, function(err1, first) {
+      console.log(err1, first)
       if (first == 1 && !err1) {
         Accounts.update({
           destinationId,
@@ -57,6 +58,7 @@ Meteor.methods({
               }
 
               makeDone({ sourceId, destinationId, _id })
+              return 'success'
             });
         });
       }

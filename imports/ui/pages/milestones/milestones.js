@@ -11,9 +11,10 @@ Template.milestones.onCreated(function() {
 Template.milestones.helpers({
   milestones(status) {
     const id = FlowRouter.getParam('id')
-    const res = Milestones.find({recepient: Meteor.userId(), [status]: true, 
+    const res = Milestones.find({[status]: true, 
       projectId: id
     }).fetch()
+    console.log()
     return res.map(x=>{
       x.isBoss = Projects.findOne(id).boss == Meteor.userId()
       return x
@@ -41,7 +42,6 @@ Template.milestones.events({
     });
   },
   'click .createJs' (event, templ){
-    console.log(this)
     Meteor.call('milestones.create', this)
   },
   'click .releaseRequestJs' (event, templ){
