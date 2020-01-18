@@ -1,21 +1,21 @@
 import { Meteor } from 'meteor/meteor';
-import { Milestones } from '/imports/api/cols.js'
+import { Milestones, Projects } from '/imports/api/cols.js'
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import './milestones.html';
 
 Template.milestones.onCreated(function() {
   Meteor.subscribe('milestones.all');
-  console.log(this)
+  Meteor.subscribe('projects.all');
 });
 
 Template.milestones.helpers({
   milestones(status) {
+    const id = FlowRouter.getParam('id')
     const res = Milestones.find({recepient: Meteor.userId(), [status]: true, 
-      // projectId: FlowRouter.getParam('projectId')
+      projectId: id
     }).fetch()
     return res.map(x=>{
-      //todo: look for project, and bossid, to determine if can approve
-      x.isBoss = Math.random() >= 0.5
+      x.isBoss = Projects.findOne(id).boss == Meteor.userId()
       return x
     })
     return []
@@ -30,7 +30,7 @@ Template.milestones.events({
       price: { value: pV }
     } = event.target;
 
-    Meteor.call('milestones.request', {title: tV, price: pV, projectId: 123}, (error) => {
+    Meteor.call('milestones.request', {title: tV, price: pV, projectId: FlowRouter.getParam('id')}, (error) => {
       if (error) {
         alert(error.error);
       }
