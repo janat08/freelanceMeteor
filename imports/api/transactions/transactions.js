@@ -9,67 +9,70 @@ Meteor.methods({
     return Accounts.insert({ userId, balance: 0, pendingTransactions: [] })
   },
   //type is for stuff like commission, bid promotion, etc designations
-  'transactions.create' ({ sourceId, destinationId, amount, title, type }) {
+  'transactions.create': async function({ sourceId, destinationId, amount, title, type }) {
+    amount = amount * 1
     const _id = Transactions.insert({ sourceId, destinationId, title, type, date: new Date(), amount, state: 'pending' })
     //todo: how im suppose to detect things going terrible wrong, and where to start fixing them
     //just comparing accs before and after wont work since concurrent transactions
     //const accs = Accounts.find({ _id: { $in: [sourceId, destinationId] } }, {sort: {_id: 1}}).fetch()
-    Accounts.update({
-      sourceId,
-      pendingTransactions: { $ne: _id },
-      balance: { $gte: amount }
-    }, {
-      $inc: { balance: -amount },
-      $push: { pendingTransactions: _id }
-    }, function(err1, first) {
-      console.log(err1, first)
-      if (first == 1 && !err1) {
-        Accounts.update({
-          destinationId,
-          pendingTransactions: { $ne: _id },
-        }, {
-          $inc: { balance: amount },
-          $push: { pendingTransactions: _id }
-        }, function(err2, second) {
-          Transactions.update({ _id: _id }, { $set: { state: "committed" } },
-            function(err3, third) {
-              if (second != 1 || third != 1 || err3 || err2) {
-                if (third != 1 || err3 && !err2 && second == 1) {
+    return await new Promise((resolve, reject) => {
+      Accounts.update({
+        _id: sourceId,
+        pendingTransactions: { $ne: _id },
+        balance: { $gte: amount }
+      }, {
+        $inc: { balance: -amount },
+        $push: { pendingTransactions: _id }
+      }, function(err1, first) {
+        console.log(err1, first)
+        if (first == 1 && !err1) {
+          return Accounts.update({
+            _id: destinationId,
+            pendingTransactions: { $ne: _id },
+          }, {
+            $inc: { balance: amount },
+            $push: { pendingTransactions: _id }
+          }, function(err2, second) {
+            return Transactions.update({ _id: _id }, { $set: { state: "committed" } },
+              function(err3, third) {
+                if (second != 1 || third != 1 || err3 || err2) {
+                  if (third != 1 || err3 && !err2 && second == 1) {
+                    Accounts.update({
+                      _id: destinationId
+                    }, {
+                      $inc: { balance: -amount },
+                      $pull: { pendingTransactions: _id }
+                    })
+                  }
+
+                  if (third != 1 || err3) {
+                    Transactions.update(_id, { $set: { state: 'cancel' } })
+                  }
+
                   Accounts.update({
-                    destinationId
+                    sourceId
                   }, {
-                    $inc: { balance: -amount },
+                    $inc: { balance: amount },
                     $pull: { pendingTransactions: _id }
                   })
+
+                  throw Meteor.Error('destination account is missing')
                 }
 
-                if (third != 1 || err3) {
-                  Transactions.update(_id, { $set: { state: 'cancel' } })
-                }
-
-                Accounts.update({
-                  sourceId
-                }, {
-                  $inc: { balance: amount },
-                  $pull: { pendingTransactions: _id }
-                })
-
-                throw Meteor.Error('destination account is missing')
-              }
-
-              makeDone({ sourceId, destinationId, _id })
-              return 'success'
-            });
-        });
-      }
-      else {
-        Transactions.update(_id, { $set: { state: 'cancel' } })
-        throw new Meteor.Error('not enough balance')
-      }
+                makeDone({ sourceId, destinationId, _id })
+                console.log('return')
+                resolve('success')
+              });
+          });
+        }
+        else {
+          Transactions.update(_id, { $set: { state: 'cancel' } })
+          throw new Meteor.Error('not enough balance')
+        }
+      })
     });
-  
-  //const accs2 = Accounts.find({ _id: { $in: [sourceId, destinationId] } }, {sort: {_id: 1}}).fetch()
-  //if (accs.length == 2, accs2.length == 2)  
+    //const accs2 = Accounts.find({ _id: { $in: [sourceId, destinationId] } }, {sort: {_id: 1}}).fetch()
+    //if (accs.length == 2, accs2.length == 2)  
   },
 });
 
@@ -105,5 +108,4 @@ function nonFailureBalance(amount, id, transId) {
       nonFailureBalance(amount, id, transId)
     }
   })
-
 }

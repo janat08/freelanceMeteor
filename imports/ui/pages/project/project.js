@@ -1,10 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import './project.html';
-import { Projects } from '/imports/api/cols.js'
+import { Projects, Users } from '/imports/api/cols.js'
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import '../milestones/milestones.js'
 Template.project.onCreated(function() {
   Meteor.subscribe('projects.all');
+  Meteor.subscribe('users.all')
 });
 
 Template.project.helpers({
@@ -15,6 +16,7 @@ Template.project.helpers({
     }
     res.bids.map(x=>{
       x.acceptable = x.userId == Meteor.userId() && x.invited && !x.won
+      x.username = Users.findOne({_id: x.userId}).username
       return x
     })
     return res

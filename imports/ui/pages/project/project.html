@@ -9,9 +9,9 @@
 <!--i need each scope, not each in-->
 {{#if isViewedByBoss}}
     {{#each bids}}
+        <a href='/profile/{{userId}}'>{{username}}</a>
         {{price}}
         {{description}}
-        {{userId}}
         {{#if invited}}
         invited
         {{else}}
@@ -20,6 +20,7 @@
     {{/each}}
 {{else}}
     {{#each bids}}
+    <a href='/profile/{{userId}}'>{{username}}</a>
     {{price}}
     {{description}}
     {{userId}}

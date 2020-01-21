@@ -1,0 +1,20 @@
+<template name="profile">
+{{#with profile}}
+{{#if edit}}
+<form class='profile'>
+    username: <input name='username' value={{username}}>
+    full name: <input name='fullName' value={{fullName}}>
+    Intro: <input name='intro' value={{intro}}>
+    description: <input name='description' value={{description}}>
+    portfolio: <input name='portfolio' value={{portfolio}}>
+    <input type='submit' value='save'>
+</form>
+{{else}}
+{{username}}
+{{fullName}}
+{{intro}}
+{{description}}
+{{portfolio}}
+{{/if}}
+{{/with}}
+</template>

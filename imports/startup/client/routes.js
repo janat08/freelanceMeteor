@@ -11,6 +11,7 @@ import '../../ui/pages/transHistory/transHistory.js'
 import '../../ui/pages/createProject/createProject.js'
 import '../../ui/pages/browseProjects/browseProjects.js'
 import '../../ui/pages/project/project.js'
+import '../../ui/pages/profile/profile.js'
 
 window.SubsCache = new SubsCache(5, 10);
 
@@ -61,6 +62,13 @@ FlowRouter.route('/createProject', {
   name: 'App.createProject',
   action() {
     BlazeLayout.render('App_body', { main: 'createProject' });
+  },
+});
+
+FlowRouter.route('/profile/:id', {
+  name: 'App.profile',
+  action() {
+    BlazeLayout.render('App_body', { main: 'profile' });
   },
 });
 
