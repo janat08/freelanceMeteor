@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import { Milestones, Transactions } from '/imports/api/cols.js'
+import { Milestones, Transactions, Projects, Users } from '/imports/api/cols.js'
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import './finances.html';
 import '../../components/financesMilestones/financesMilestones.js'
@@ -25,6 +25,7 @@ Template.finances.onCreated(function() {
   SubsCache.subscribe('milestones.all');
   SubsCache.subscribe('transactions.all')
   SubsCache.subscribe('users.all')
+  SubsCache.subscribe('projects.all')
 
   this.gen = getNumber()
   this.timeS = moment().subtract(3, 'months').toDate()
@@ -44,22 +45,22 @@ Template.finances.onCreated(function() {
       timeCha.get()
       this.autorun(() => {
         const accountId = Meteor.user().accountId
-        this.expenses.set(Transactions.find({ $and: [{date: {$lte: timeE}}, {date: {$gte: timeS}}], sourceId: accountId, $or: [{ type: "membership" }, { type: "commissionEmployer" }] }).fetch())
+        this.expenses.set(Transactions.find({ $and: [{ date: { $lte: timeE } }, { date: { $gte: timeS } }], sourceId: accountId, $or: [{ type: "membership" }, { type: "commissionEmployer" }] }).fetch())
       })
       //payments
       this.autorun(() => {
         const accountId = Meteor.user().accountId
-        this.payments.set(Transactions.find({ $and: [{date: {$lte: timeE}}, {date: {$gte: timeS}}], sourceId: accountId, $or: [{ type: "milestones" }, { type: "other" }] }).fetch())
+        this.payments.set(Transactions.find({ $and: [{ date: { $lte: timeE } }, { date: { $gte: timeS } }], sourceId: accountId, $or: [{ type: "milestones" }, { type: "other" }] }).fetch())
       })
       //positiveTransactions
       this.autorun(() => {
         const accountId = Meteor.user().accountId
-        this.positiveTransactions.set(Transactions.find({ $and: [{date: {$lte: timeE}}, {date: {$gte: timeS}}], destinationId: accountId, $or: [{ type: "milestones" }] }).fetch())
+        this.positiveTransactions.set(Transactions.find({ $and: [{ date: { $lte: timeE } }, { date: { $gte: timeS } }], destinationId: accountId, $or: [{ type: "milestones" }] }).fetch())
       })
       //costOfSales
       this.autorun(() => {
         const accountId = Meteor.user().accountId
-        this.costOfSales.set(Transactions.find({ $and: [{date: {$lte: timeE}}, {date: {$gte: timeS}}], sourceId: accountId, $or: [{ type: "commissionEmployee" }, { type: "bid promotion" }] }).fetch())
+        this.costOfSales.set(Transactions.find({ $and: [{ date: { $lte: timeE } }, { date: { $gte: timeS } }], sourceId: accountId, $or: [{ type: "commissionEmployee" }, { type: "bid promotion" }] }).fetch())
       })
     }
   })
@@ -67,24 +68,41 @@ Template.finances.onCreated(function() {
 
 Template.finances.helpers({
   milestones() {
-    const query = {}
-    const incoming = Milestones.find(query, { limit: 20 }).fetch()
-    const incomingCount = Milestones.find(query).count()
+    const projectsO = Projects.find({
+      boss: Meteor.userId()
+    }).fetch().map(x => {
+      Object.assign(x, Milestones.findOne({projectId: x._id}))
+      return x
+    })
+    const projectsI = Projects.find({
+      'winner.userId': Meteor.userId()
+    }).fetch().map(x => {
+      return Object.assign({project: x}, Milestones.findOne({projectId: x._id}),
+      {username: Users.findOne(x.boss).username})
+    })
+    const queryI = { projectId: { $in: projectsI.map(x => x._id) } }
+    const queryO = { projectId: { $in: projectsO.map(x => x._id) } }
+    const incoming = Milestones.find(queryI).fetch()
+    const incomingCount = Milestones.find(queryI).count()
+    const outgoing = Milestones.find(queryO).fetch()
+    const outgoingCount = Milestones.find(queryO).count()
     //todo: differentiate incoming/outgoing through projectId
     const ins = Template.instance()
     const dir = ins.direction.get()
+    console.log(outgoing, incoming)
     const result = {
       incoming: {
         active: dir,
-        mapped: incoming.map(mapMilestones),
-        count: incomingCount
+        mapped: projectsI.map(mapMilestones),
+        count: projectsI.length
       },
       outgoing: {
         active: !dir,
-        mapped: incoming.map(mapMilestones),
-        count: incomingCount
+        mapped: projectsO.map(mapMilestones),
+        count: projectsO.length
       }
     }
+    console.log(result)
     return result
   },
   costOfSales() {

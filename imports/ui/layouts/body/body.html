@@ -1,11 +1,32 @@
 <template name="App_body">
-    <a href='/milestones/1234'>milestones for 1234</a>
-    <a href='/finances'>finances</a>
-    <a href='/transactions'>transactions history</a>
-    <a href='/projects'>projects</a>
-    <a href='/createProject'>create Project</a>
-    <a href='/profile/{{userId}}'>profile</a>
-    {{> loginButtons}}
-    <br/>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Freelancer</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/finances">finances</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/transactions">transactions history</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/projects">projects</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/createProject">create Project</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="/profile/{{userId}}">profile</a>
+      </li>
+      <li class="nav-item active">
+                {{> loginButtons}}
+      </li>
+    </ul>
+  </div>
+</nav>
     {{> Template.dynamic template=main}}
 </template>

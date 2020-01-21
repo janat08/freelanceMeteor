@@ -51,9 +51,16 @@ Meteor.methods({
       destinationId: account._id,
       amount: milestone.price,
       title: 'milestone',
-      type: 'milestone create'
+      type: 'milestone release'
     })
-    if (res == 'success') {
+    const res2 = Meteor.call("transactions.create", {
+      sourceId: account._id,
+      destinationId: escrow._id,
+      amount: milestone.price*0.1,
+      title: 'milestone',
+      type: 'comission'
+    })
+    if (res == 'success' && res2 == 'success') {
       Milestones.update(_id, { $set: { released: true, created: false, releaseRequested: false } })
     }
     else {

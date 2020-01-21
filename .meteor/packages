@@ -23,9 +23,10 @@ shell-server@0.4.0            # Server-side component of the `meteor shell` comm
 
 kadira:flow-router      # FlowRouter is a very simple router for Meteor
 kadira:blaze-layout     # Layout manager for blaze (works well with FlowRouter)
-less                    # Leaner CSS language
+#less                    # Leaner CSS language
 
 babrahams:constellation
 http
 email
 ccorcos:subs-cache
+alexwine:bootstrap-4

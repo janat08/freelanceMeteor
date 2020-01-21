@@ -10,7 +10,7 @@ Template.transHistory.onCreated(function() {
 Template.transHistory.helpers({
   transactions() {
     const accountId = Meteor.user().accountId
-    return Transactions.find({ $or: { sourceId: accountId, destionationId: accountId } })
+    return Transactions.find({ $or: [{ sourceId: accountId },{ destinationId: accountId }] })
       .map(x => {
         if (x.sourceId == accountId) {
           x.type = false

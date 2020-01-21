@@ -1,5 +1,5 @@
 <template name="financesMilestones">
-    employer, project name, amount, description, status, action: cancel/dispute
+    action: cancel/dispute
 <table>
     <tr>
         <th>Employer</th>
@@ -12,10 +12,10 @@
         {{#each milestones}}
     <tr>
         <td>
-            {{creator}}
+            {{username}}
         </td>
         <td>
-            {{projectName}} 
+            <a href='/project/{{project._id}}'>{{project.title}}</a>
         </td>        
         <td>
             {{price}} 
@@ -25,9 +25,6 @@
         </td>        
         <td>
             {{status}} 
-        </td>
-        <td>
-            //actions
         </td>
     </tr>
     {{/each}}
