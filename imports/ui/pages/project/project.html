@@ -1,34 +1,64 @@
 <template name="project">
 {{#with project}}
-{{title}}
-{{price}}
-{{description}}
+<h2>
+    {{title}}
+</h2>
+
+<h5>Price: {{price}}$</h5>
+<p>{{description}}</p>
+
 {{#if complete}}
     {{>milestones}}
 {{else}}
 <!--i need each scope, not each in-->
+<h5>Bids:</h5>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Username</th>
+      <th scope="col">Price</th>
+      <th scope="col">Description</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
 {{#if isViewedByBoss}}
     {{#each bids}}
-        <a href='/profile/{{userId}}'>{{username}}</a>
-        {{price}}
-        {{description}}
-        {{#if invited}}
+
+    <tr>
+      <th><a href='/profile/{{userId}}'>{{username}}</a></th>
+      <td>{{price}}</td>
+      <td>{{description}}</td>
+      <td>        
+      {{#if invited}}
         invited
         {{else}}
         <button class='inviteJs'>Invite</button>
         {{/if}}
+        </td>
+    </tr>
+
+
     {{/each}}
 {{else}}
     {{#each bids}}
-    <a href='/profile/{{userId}}'>{{username}}</a>
-    {{price}}
-    {{description}}
-    {{userId}}
+    <tr>
+      <th><a href='/profile/{{userId}}'>{{username}}</a></th>
+      <td>{{price}}</td>
+      <td>{{description}}</td>
+      <td>        
     {{#if acceptable}}
         <button class='acceptJs'>Accept</button>
+    {{else}}
+        Uninvited
     {{/if}}
+        </td>
+    </tr>
+
     {{/each}}
 {{/if}}
+  </tbody>
+</table>
 <form class='bidJs'>
     description: <input name='description'>
     price: <input name='price'>

@@ -60,7 +60,7 @@ Template.finances.onCreated(function() {
       //costOfSales
       this.autorun(() => {
         const accountId = Meteor.user().accountId
-        this.costOfSales.set(Transactions.find({ $and: [{ date: { $lte: timeE } }, { date: { $gte: timeS } }], sourceId: accountId, $or: [{ type: "commissionEmployee" }, { type: "bid promotion" }] }).fetch())
+        this.costOfSales.set(Transactions.find({ $and: [{ date: { $lte: timeE } }, { date: { $gte: timeS } }], sourceId: accountId, $or: [{ type: "commission" }, { type: "bid promotion" }] }).fetch())
       })
     }
   })
@@ -71,14 +71,13 @@ Template.finances.helpers({
     const projectsO = Projects.find({
       boss: Meteor.userId()
     }).fetch().map(x => {
-      Object.assign(x, Milestones.findOne({projectId: x._id}))
+      Object.assign(x, Milestones.findOne({ projectId: x._id }))
       return x
     })
     const projectsI = Projects.find({
       'winner.userId': Meteor.userId()
     }).fetch().map(x => {
-      return Object.assign({project: x}, Milestones.findOne({projectId: x._id}),
-      {username: Users.findOne(x.boss).username})
+      return Object.assign({ project: x }, Milestones.findOne({ projectId: x._id }), { username: Users.findOne(x.boss).username })
     })
     const queryI = { projectId: { $in: projectsI.map(x => x._id) } }
     const queryO = { projectId: { $in: projectsO.map(x => x._id) } }
@@ -106,16 +105,21 @@ Template.finances.helpers({
     return result
   },
   costOfSales() {
-    return Template.instance().costOfSales.get()
+    const val = Template.instance().costOfSales.get()
+    return { list: val, total: val.reduce((a, x) => { return a + x.amount }, 0) }
   },
   positiveTransactions() {
-    return Template.instance().positiveTransactions.get()
+    const val = Template.instance().positiveTransactions.get()
+    return { list: val, total: val.reduce((a, x) => { return a + x.amount }, 0) }
   },
   payments() {
-    return Template.instance().payments.get()
+    const val = Template.instance().payments.get()
+    console.log(val, 'payments')
+    return { list: val, total: val.reduce((a, x) => { return a + x.amount }, 0) }
   },
   expenses() {
-    return Template.instance().expenses.get()
+    const val = Template.instance().expenses.get()
+    return { list: val, total: val.reduce((a, x) => { return a + x.amount }, 0) }
   },
   totalExpenses() {
     const { payments, expenses } = Template.instance()

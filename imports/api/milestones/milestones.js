@@ -51,7 +51,7 @@ Meteor.methods({
       destinationId: account._id,
       amount: milestone.price,
       title: 'milestone',
-      type: 'milestone release'
+      type: 'milestone'
     })
     const res2 = Meteor.call("transactions.create", {
       sourceId: account._id,

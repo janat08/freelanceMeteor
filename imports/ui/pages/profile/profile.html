@@ -10,11 +10,20 @@
     <input type='submit' value='save'>
 </form>
 {{else}}
-{{username}}
-{{fullName}}
-{{intro}}
-{{description}}
-{{portfolio}}
+
+<h5>{{username}} - {{fullName}}</h5>
+
+<p>
+    {{intro}}
+</p>
+<h6>Description</h6>
+<p>
+    {{description}}
+</p>
+<h6>Portfolio</h6>
+<p>
+    {{portfolio}}
+</p>
 {{/if}}
 {{/with}}
 </template>

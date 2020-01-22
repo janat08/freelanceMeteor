@@ -1,4 +1,3 @@
-
 <template name="finances">
 <h2>Manage Transactions</h2>
 <h3>milestones, invoices (disabled), withdrawals (disabled), transfer funds (disabled), <a href='/transactions'>history</a> </h3>
@@ -18,27 +17,75 @@ employer, project name, amount, description, status, action: cancel/dispute
 Financial Position; period type drop, period drop
 <input class='picker' placeholder="Pick Start">
 <input class='pickerEnd' placeholder="Pick End">
-<h5>income accordion</h5>
-<h6>Sales</h6>
-{{#each positiveTransactions}}
+<h5>income {{totalProfit}}</h5>
+<div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Sales {{positiveTransactions.total}}
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+        {{#each positiveTransactions.list}}
+            {{type}}{{amount}}
+        {{/each}}
+    </div>
+    </div>
+  </div>
+    <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Cost of Sales {{costOfSales.total}}
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+        {{#each costOfSales.list}}
     {{type}}{{amount}}
 {{/each}}
-<h6>cost of sales</h6>
-{{#each costOfSales}}
-    {{type}}{{amount}}
-{{/each}}
-TotalProfit: {{totalProfit}}
+    </div>
+    </div>
+  </div>
+</div>
 
-<h5>expenses accordion</h5>
-<h6>payments </h6>
-{{#each payments}}
+<h5>expenses accordion {{totalExpenses}}</h5>
+<div class="accordion" id="accordionExample">
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Payments {{payments.total}}
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+        {{#each payments.list}}
     {{type}}{{amount}}
 {{/each}}
-<h6>expenses</h6>
-{{#each expenses}}
+    </div>
+    </div>
+  </div>
+    <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h2 class="mb-0">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Expenses {{expenses.total}}
+        </button>
+      </h2>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+      <div class="card-body">
+        {{#each expenses.list}}
     {{type}}{{amount}}
 {{/each}}
-
-TotalExpenses: {{totalExpenses}}
+    </div>
+    </div>
+  </div>
+</div>
 </template>
-

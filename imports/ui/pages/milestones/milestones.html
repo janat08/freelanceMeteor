@@ -2,14 +2,14 @@
     <h3>Milestones</h3>
     <h4>Requested</h4>
     {{#each milestones 'requested'}}
-        {{title}} {{price}}
+        {{title}} for {{price}}$
         {{#if isBoss}}
         <button class='createJs'>Create Milestone</button>
         {{/if}}
     {{/each}}
     <h4>Created</h4>
     {{#each milestones 'created'}}
-        {{title}} {{price}}
+        {{title}} for {{price}}$
         {{#if isBoss}}
             <button class='releaseJs'>Release Milestone</button>
         {{else}}
@@ -18,14 +18,14 @@
     {{/each}}
     <h4>Release Requests</h4>
     {{#each milestones 'releaseRequested'}}
-        {{title}} {{price}}
+        {{title}} for {{price}}$
         {{#if isBoss}}
             <button class='releaseJs'>Release Milestone</button>
         {{/if}}
     {{/each}}
     <h4>Released</h4>
     {{#each milestones 'released'}}
-        {{title}} {{price}}
+        {{title}} for {{price}}$
     {{/each}}
     
 <form id='requestMilestoneJs'>

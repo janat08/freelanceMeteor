@@ -3,6 +3,7 @@ import './project.html';
 import { Projects, Users } from '/imports/api/cols.js'
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import '../milestones/milestones.js'
+
 Template.project.onCreated(function() {
   Meteor.subscribe('projects.all');
   Meteor.subscribe('users.all')

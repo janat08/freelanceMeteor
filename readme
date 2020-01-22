@@ -1,20 +1,18 @@
 todo:
+skill hashtags
 freelancers bid outside of list so that he doesn't have to search for it
 date for filter and sorting
 fix filtering
-financial dash,
-finish transactions acid compliance, and make sure the bookkeeping from gmail description is implemented
 milestones when bidding
 
 todo:
 from field for email
-the transactions terribly wrong state fix isnt applied, since the docs don't describe well enough detection process.
 
 done:
 
 
 notes:
 no skills
-project id hardcoded
-who is boss hardcoded
+comission employee not done
 milestone requests in financial dash not included,
+the transactions terribly wrong state fix isnt applied, since the docs don't describe well enough detection process.
