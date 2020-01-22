@@ -1,6 +1,6 @@
 <template name="financesMilestones">
     action: cancel/dispute
-<table>
+<table class="table">
     <tr>
         <th>Employer</th>
         <th>Project Name</th>
@@ -27,6 +27,8 @@
             {{status}} 
         </td>
     </tr>
+    {{else}}
+    empty/loading
     {{/each}}
 </table>
 
