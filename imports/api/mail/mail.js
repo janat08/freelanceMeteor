@@ -18,7 +18,7 @@ Meteor.methods({
     const users = Users.find({ _id: { $in: recepients } }).fetch()
 
     users.forEach(x => {
-      Meteor.call('mail.send', {body, subject})
+      Meteor.call('mail.send', {body, subject, recepient: x.emails[0].address})
     })
   },
   'mail.send' ( {body= 'asdf', subject = 'asdf', recepient = testEmail} ) {

@@ -77,6 +77,7 @@ Template.finances.helpers({
     const projectsI = Projects.find({
       'winner.userId': Meteor.userId()
     }).fetch().map(x => {
+      console.log(123, x._id, Milestones.findOne({ projectId: x._id }))
       return Object.assign({ project: x }, Milestones.findOne({ projectId: x._id }), { username: Users.findOne(x.boss).username })
     })
     const queryI = { projectId: { $in: projectsI.map(x => x._id) } }
