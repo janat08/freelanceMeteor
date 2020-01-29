@@ -20,12 +20,16 @@ Template.createProject.events({
       title: { value: tV },
       description: { value: dV },
       price: { value: pV },
+      skills: { value: sV },
     } = target
+
+    const sVP = sV.split('#').map(x=>x.trim()).filter(x=>x!='')
 
     Meteor.call('projects.create', {
       title: tV,
       description: dV,
       price: pV,
+      skills: sVP,
     }, (err, res) => {
       console.log(23)
       if (err) {

@@ -1,15 +1,44 @@
 <template name="browseProjects">
-
-<form class='projectFilters'>
-    price top: <input name='upperPrice'>
-    price bottom: <input name='lowerPrice'>
-    description/title: <input name='text'>
-    <input type='submit' class>
+<form  class='projectFilters'>
+  <div class="form-group">
+    <label >price top:</label>
+    <input name='upperPrice' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+  </div>
+  <div class="form-group">
+    <label >price bottom:</label>
+    <input name='lowerPrice' class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>  
+  <div class="form-group">
+    <label >description/title:</label>
+    <input name='text' class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+    <div class="form-group">
+    <label >skills separated by hashtag:</label>
+    <input name='skills' class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Price</th>
+      <th scope="col">Skills</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
 {{#each projects}}
-<br/>
-<a href='/project/{{_id}}'>{{title}}</a> {{price}}
-{{/each}}
 
+    <tr>
+      <td><a href='/project/{{_id}}'>{{title}}</a></td>
+      <td>{{price}}</td>
+      <td>{{skills}}</td>
+      <td>{{date}}</td>
+    </tr>
+
+{{/each}}
+    </tbody>
+</table>
 </template>

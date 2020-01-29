@@ -5,11 +5,36 @@
 </h2>
 
 <h5>Price: {{price}}$</h5>
+<h6>Skills:{{#each skills}}
+{{this}},
+{{/each}}</h6>
+
 <p>{{description}}</p>
 
 {{#if complete}}
     {{>milestones}}
 {{else}}
+<h6>You bid:</h6>
+{{#with yourBid}}
+<table class="table">
+  <tr>
+      <td> <a href='/profile/{{userId}}'>{{username}}</a></td>
+      <td>{{price}}</td>
+      <td>{{description}}</td>
+      <td>        
+      {{#if invited}}
+        invited
+        {{else}}
+        <button class='inviteJs'>Invite</button>
+        {{/if}}
+        </td>
+  </tr>
+</table>
+
+{{else}}
+Empty
+{{/with}}        
+
 <!--i need each scope, not each in-->
 <h5>Bids:</h5>
 <table class="table">
@@ -26,7 +51,7 @@
     {{#each bids}}
 
     <tr>
-      <th><a href='/profile/{{userId}}'>{{username}}</a></th>
+      <td><a href='/profile/{{userId}}'>{{username}}</a></td>
       <td>{{price}}</td>
       <td>{{description}}</td>
       <td>        
@@ -43,7 +68,7 @@
 {{else}}
     {{#each bids}}
     <tr>
-      <th><a href='/profile/{{userId}}'>{{username}}</a></th>
+      <td><a href='/profile/{{userId}}'>{{username}}</a></td>
       <td>{{price}}</td>
       <td>{{description}}</td>
       <td>        

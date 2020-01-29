@@ -15,13 +15,22 @@ Template.project.helpers({
     if (res.boss == Meteor.userId()) {
       res.isViewedByBoss = true
     }
-    res.bids.map(x=>{
+    res.bids.map(x => {
       x.acceptable = x.userId == Meteor.userId() && x.invited && !x.won
-      x.username = Users.findOne({_id: x.userId}).username
+      x.username = Users.findOne({ _id: x.userId }).username
       return x
     })
     return res
   },
+  yourBid() {
+    let res = Projects.findOne(FlowRouter.getParam('id'))
+    res.bids.filter(x=>x.userId == Meteor.userId()).map(x => {
+      x.acceptable = x.userId == Meteor.userId() && x.invited && !x.won
+      x.username = Users.findOne({ _id: x.userId }).username
+      return x
+    })
+    return res
+  }
 });
 
 Template.project.events({

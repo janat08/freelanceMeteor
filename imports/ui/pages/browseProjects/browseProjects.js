@@ -7,6 +7,7 @@ Template.browseProjects.onCreated(function() {
   this.priceB = new ReactiveVar()
   this.priceT = new ReactiveVar()
   this.text = new ReactiveVar()
+  this.skills = new ReactiveVar()
 
 });
 
@@ -14,12 +15,13 @@ Template.browseProjects.onCreated(function() {
 
 Template.browseProjects.helpers({
   projects() {
-    const { text, priceB, priceT } = Template.instance()
+    const { text, priceB, priceT, skills } = Template.instance()
     const reg = new RegExp(escapeRegex(text.get() || ""), 'gi')
     const pB = priceB.get()
     const pT = priceT.get()
-    let query = { }
-    if (pT||pB){
+    const sL = skills.get()
+    let query = {}
+    if (pT || pB) {
       query.price = {}
     }
     if (pT) {
@@ -31,8 +33,14 @@ Template.browseProjects.helpers({
     if (text.get()) {
       query.$or = [{ title: reg }, { description: reg }]
     }
+    if (sL){
+      query.skills = {$in: sL}
+    }
     console.log(query)
-    return Projects.find(query)
+    return Projects.find(query, {sort: {date: -1}}).fetch().map(x=>{
+      x.date = x.date.toLocaleString()
+      return x
+    })
   },
 });
 
@@ -43,11 +51,15 @@ Template.browseProjects.events({
     const {
       upperPrice: { value: uP },
       lowerPrice: { value: lP },
-      text: { value: text }
+      text: { value: text },
+      skills: { value: sV },
     } = e.target
+    const sVP = sV.split('#').map(x => x.trim()).filter(x => x != '')
+
     t.priceT.set(uP)
     t.priceB.set(lP)
     t.text.set(text)
+    t.skills.set(sVP)
   },
 });
 

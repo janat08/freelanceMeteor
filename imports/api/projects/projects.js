@@ -7,7 +7,7 @@ import { Projects } from '../cols.js';
 Meteor.methods({
   'projects.create' (info) {
     if (!this.userId) throw new Meteor.Error('logged out')
-    return Projects.insert({ ...info, bids: [], boss: this.userId })
+    return Projects.insert({ ...info, bids: [], boss: this.userId, date: new Date() })
   },
   'projects.bid' ({ price, description, milestones, _id }) {
     if (!this.userId) throw new Meteor.Error('logged out')
