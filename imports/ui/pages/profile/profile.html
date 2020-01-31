@@ -2,12 +2,27 @@
 {{#with profile}}
 {{#if edit}}
 <form class='profile'>
-    username: <input name='username' value={{username}}>
-    full name: <input name='fullName' value={{fullName}}>
-    Intro: <input name='intro' value={{intro}}>
-    description: <input name='description' value={{description}}>
-    portfolio: <input name='portfolio' value={{portfolio}}>
-    <input type='submit' value='save'>
+    <div class="form-group">
+        <label>Username</label>
+        <input name='username' value={{username}} class="form-control">
+    </div> 
+    <div class="form-group">
+        <label>Full Name</label>
+        <input name='fullName' value={{fullName}} class="form-control">
+    </div> 
+    <div class="form-group">
+        <label>Intro</label>
+        <input name='intro' value={{intro}} class="form-control">
+    </div> 
+    <div class="form-group">
+        <label>Description</label>
+        <input name='description' value={{description}} class="form-control">
+    </div> 
+    <div class="form-group">
+        <label>Portfolio</label>
+        <input name='portfolio' value={{portfolio}} class="form-control">
+    </div> 
+    <input type='submit' class="btn btn-primary" value='save'>
 </form>
 {{else}}
 

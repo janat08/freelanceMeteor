@@ -20,14 +20,12 @@ Meteor.methods({
     const bid = proj.bids.find(x => x.userId == this.userId)
     if (!bid) throw new Meteor.Error('hasnt bid')
     if (!bid.invited) throw new Meteor.Error('not invited')
-    //todo check balance
-    return Projects.update({_id, "bids.userId": userId}, { $set: { "bids.$.won": true, complete: true, winner: bid }})
+    return Projects.update({_id, "bids.userId": userId}, { $set: { "bids.$.won": true, complete: true, winner: bid, price: bid.price }})
   },
   'projects.invite' ({ userId, _id }) {
     if (!this.userId) throw new Meteor.Error('logged out')
     const proj = Projects.findOne(_id)
     if (proj.boss != this.userId) throw new Meteor.Error('not boss')
-    //todo check balance
     return Projects.update({_id, "bids.userId": userId}, { $set: { "bids.$.invited": true, "bids.$.inviteDate": new Date() } })
   },
 });

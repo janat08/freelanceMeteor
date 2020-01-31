@@ -1,33 +1,49 @@
 <template name="milestones">
     <h3>Milestones</h3>
     <h4>Requested</h4>
+    <ul class="list-group">
     {{#each milestones 'requested'}}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
         {{title}} for {{price}}$
         {{#if isBoss}}
-        <button class='createJs'>Create Milestone</button>
+        <button class='btn createJs'>Create Milestone</button>
         {{/if}}
-         <button class='cancelJs'>Cancel Milestone</button>
+         <button class='btn cancelJs'>Cancel Milestone</button>
+      </li>
     {{/each}}
+    </ul>
     <h4>Created</h4>
+    <ul class="list-group">
     {{#each milestones 'created'}}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
         {{title}} for {{price}}$
         {{#if isBoss}}
-            <button class='releaseJs'>Release Milestone</button>
+            <button class='btn releaseJs'>Release Milestone</button>
         {{else}}
-            <button class='releaseRequestJs'>Request Milestone</button>
+            <button class='btn releaseRequestJs'>Request Milestone</button>
         {{/if}}
+      </li>
     {{/each}}
+    </ul>
     <h4>Release Requests</h4>
+    <ul class="list-group">
     {{#each milestones 'releaseRequested'}}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
         {{title}} for {{price}}$
         {{#if isBoss}}
-            <button class='releaseJs'>Release Milestone</button>
+            <button class='btn releaseJs'>Release Milestone</button>
         {{/if}}
+     </li>
     {{/each}}
+    </ul>
     <h4>Released</h4>
+    <ul class="list-group">
     {{#each milestones 'released'}}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
         {{title}} for {{price}}$
+    </li>
     {{/each}}
+    </ul>
     
 <form id='requestMilestoneJs'>
     Request milestone
