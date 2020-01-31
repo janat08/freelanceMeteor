@@ -1,5 +1,4 @@
 <template name="financesMilestones">
-    action: cancel/dispute
 <table class="table">
     <tr>
         <th>Employer</th>
@@ -26,6 +25,28 @@
         <td>
             {{status}} 
         </td>
+        <td>
+            <div class="dropdown">
+  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Actions
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    {{#if isBoss}}
+            <a class='releaseJs dropdown-item'>Release Milestone</a>
+            <a class='createJs dropdown-item'>Create Milestone</a>
+            {{#if requested}}
+            <a class='cancelJs dropdown-item'>Cancel Milestone</a>
+            {{/if}}
+    {{else}}
+            <a class='releaseRequestJs dropdown-item'>Request Milestone</a>
+            {{#unless released}}
+            <a class='cancelJs dropdown-item'>Cancel Milestone</a>
+            {{/unless}}
+    {{/if}}
+  </div>
+</div>
+            
+        </td>
     </tr>
     {{else}}
     empty/loading
@@ -33,4 +54,3 @@
 </table>
 
 </template>
-

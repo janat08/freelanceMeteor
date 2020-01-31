@@ -37,8 +37,33 @@ Meteor.methods({
       return res
     }
   },
+  'milestones.cancel' ({ _id }) {
+    const milestone = Milestones.findOne(_id)
+    if (milestone.requested != true) {
+      const proj = Projects.findOne(milestone.projectId)
+      const boss = Users.findOne(proj.boss)
+      const account = Accounts.findOne(boss.accountId)
+      const escrow = Accounts.findOne({ userId: 'escrow' })
+      const res = Meteor.call("transactions.create", {
+        sourceId: escrow._id,
+        destinationId: account._id,
+        amount: milestone.price,
+        title: 'milestone',
+        type: 'milestone'
+      })
+      if (res == 'success') {
+        Milestones.update(_id, { $set: { canceled: true, created: false, releaseRequested: false, requested: false } })
+      }
+      else {
+        return res
+      }
+    } else {
+      Milestones.update(_id, { $set: { canceled: true, created: false, releaseRequested: false, requested: false } })
+    }
+
+  },
   'milestones.releaseRequest' ({ _id }) {
-    Milestones.update(_id, { $set: { created: false, releaseRequested: true } })
+    Milestones.update(_id, { $set: { created: false, releaseRequested: true, } })
   },
   'milestones.release' ({ _id }) {
     const milestone = Milestones.findOne(_id)
@@ -56,7 +81,7 @@ Meteor.methods({
     const res2 = Meteor.call("transactions.create", {
       sourceId: account._id,
       destinationId: escrow._id,
-      amount: milestone.price*0.1,
+      amount: milestone.price * 0.1,
       title: 'milestone',
       type: 'comission'
     })

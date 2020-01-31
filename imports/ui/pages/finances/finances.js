@@ -98,11 +98,11 @@ Template.finances.helpers({
       },
       outgoing: {
         active: !dir,
-        mapped: projectsO.map(mapMilestones),
+        mapped: projectsO.map(mapMilestones).map(x=>{x.isBoss = true; return x}),
         count: projectsO.length
       }
     }
-    console.log(result)
+    console.log(result.incoming.mapped)
     return result
   },
   costOfSales() {
@@ -171,9 +171,19 @@ Template.finances.events({
     templ.selected = ev.target.value
     templ.timeCha.set(templ.gen())
   },
+  'click .createJs' (event, templ) {
+    Meteor.call('milestones.create', this)
+  },
+  'click .releaseRequestJs' (event, templ) {
+    Meteor.call('milestones.releaseRequest', this)
+  },
+  'click .releaseJs' (event, templ) {
+    Meteor.call('milestones.release', this)
+  },
+  'click .cancelJs' (event, templ) {
+    Meteor.call('milestones.cancel', this)
+  },
 });
-
-
 
 Template.finances.onRendered(function() {
   const instance = this

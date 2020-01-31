@@ -1,8 +1,6 @@
 <template name="finances">
 <h2>Manage Transactions</h2>
 <h3>milestones, invoices (disabled), withdrawals (disabled), transfer funds (disabled), <a href='/transactions'>history</a> </h3>
-milestones (incoming/outgoing(number of out/in))
-employer, project name, amount, description, status, action: cancel/dispute
 {{#if milestones.incoming.active}}
 <button class='outgoingJs'>Outgoing {{milestones.outgoing.count}}</button>
 <button class='incomingJs'>Incoming {{milestones.incoming.count}}</button>
