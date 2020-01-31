@@ -12,7 +12,7 @@
 {{/if}}
 
 <h2>Profit and Loss</h2>
-Financial Position; period type drop, period drop
+Financial Position
 <input class='picker' placeholder="Pick Start">
 <input class='pickerEnd' placeholder="Pick End">
 <h5>income {{totalProfit}}</h5>
@@ -20,12 +20,12 @@ Financial Position; period type drop, period drop
   <div class="card">
     <div class="card-header" id="headingTwo">
       <h2 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSales" aria-expanded="false" aria-controls="collapseTwo">
           Sales {{positiveTransactions.total}}
         </button>
       </h2>
     </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+    <div id="collapseSales" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
       <div class="card-body">
         {{#each positiveTransactions.list}}
             {{type}}{{amount}}
@@ -36,12 +36,12 @@ Financial Position; period type drop, period drop
     <div class="card">
     <div class="card-header" id="headingTwo">
       <h2 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#costOfSales" aria-expanded="false" aria-controls="collapseTwo">
           Cost of Sales {{costOfSales.total}}
         </button>
       </h2>
     </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+    <div id="costOfSales" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
       <div class="card-body">
         {{#each costOfSales.list}}
     {{type}}{{amount}}
@@ -52,16 +52,16 @@ Financial Position; period type drop, period drop
 </div>
 
 <h5>expenses accordion {{totalExpenses}}</h5>
-<div class="accordion" id="accordionExample">
+<div class="accordion" id="accordionExpenses">
   <div class="card">
     <div class="card-header" id="headingTwo">
       <h2 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#payTotal" aria-expanded="false" aria-controls="collapseTwo">
           Payments {{payments.total}}
         </button>
       </h2>
     </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+    <div id="payTotal" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExpenses">
       <div class="card-body">
         {{#each payments.list}}
     {{type}}{{amount}}
@@ -70,14 +70,14 @@ Financial Position; period type drop, period drop
     </div>
   </div>
     <div class="card">
-    <div class="card-header" id="headingTwo">
+    <div class="card-header" id="headingExp">
       <h2 class="mb-0">
-        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#expensesList" aria-expanded="false" aria-controls="collapseTwo">
           Expenses {{expenses.total}}
         </button>
       </h2>
     </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+    <div id="expensesList" class="collapse" aria-labelledby="headingExp" data-parent="#accordionExpenses">
       <div class="card-body">
         {{#each expenses.list}}
     {{type}}{{amount}}
