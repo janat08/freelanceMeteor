@@ -1,23 +1,23 @@
 todo:
+finances actions are weird
+//////////////////////////
 theres no overflow auto in chat
 use createDirectMessage with others username, generate random username on freelancer side
 or preserve settings route; enable video conference under settings from the start
 change direct messages label (i18) in sidenav.html
 the action bar at the top wont show embedded
 upload file area doesn't work- deleted-, and styles break because the text messages expand container outside parent
-
 room message box isn't in mobile mode
-
-notes:
-
-defects:
-usernames are not unique on freelancer side, which they're suppose to be for RC, and just generated randomly from the start in liu requiring it
-
 
 done:
 
 
+defects:
+usernames are not unique on freelancer side, which they're suppose to be for RC, and just generated randomly from the start in liu requiring it
+
 notes:
+
+////////////////////////////////
 if a lot of messages are in chat, then it will ignore fixed height, and begin overflowing
 consider using condensed view by default
 styles are broken
