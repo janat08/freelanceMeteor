@@ -26,7 +26,8 @@
             {{status}} 
         </td>
         <td>
-            <div class="dropdown">
+              {{#unless released}}
+    <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Actions
   </button>
@@ -45,7 +46,8 @@
     {{/if}}
   </div>
 </div>
-            
+      {{/unless}}
+        
         </td>
     </tr>
     {{else}}

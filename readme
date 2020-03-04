@@ -1,5 +1,13 @@
 todo:
-finances actions are weird
+test profit/loss
+test profit/loss filter
+test create project
+test project filters
+test profile
+test project milestones
+milestones during the bid
+yourbid once invited doesn't work, on project, the accept button doesnt show
+
 //////////////////////////
 theres no overflow auto in chat
 use createDirectMessage with others username, generate random username on freelancer side
@@ -8,12 +16,16 @@ change direct messages label (i18) in sidenav.html
 the action bar at the top wont show embedded
 upload file area doesn't work- deleted-, and styles break because the text messages expand container outside parent
 room message box isn't in mobile mode
+///////////////////////////
 
 done:
-
+finances actions are weird
+remove your bid section when boss looks at the project
 
 defects:
-usernames are not unique on freelancer side, which they're suppose to be for RC, and just generated randomly from the start in liu requiring it
+freelancers/bosses projects can't be found
+////////////////////////////////
+
 
 notes:
 

@@ -24,11 +24,14 @@ Template.project.helpers({
   },
   yourBid() {
     let res = Projects.findOne(FlowRouter.getParam('id'))
-    res.bids.filter(x=>x.userId == Meteor.userId()).map(x => {
+    if (Meteor.userId() == res.boss || res.bids.length == 0) return null
+    res.bids = res.bids.filter(x => x.userId == Meteor.userId()).map(x => {
       x.acceptable = x.userId == Meteor.userId() && x.invited && !x.won
       x.username = Users.findOne({ _id: x.userId }).username
       return x
     })
+    console.log(res.bids)
+
     return res
   }
 });
