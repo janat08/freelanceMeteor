@@ -2,16 +2,16 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
 // Import needed templates
-import '../../ui/layouts/body/body.js';
-import '../../ui/pages/milestones/milestones.js';
-import '../../ui/pages/finances/finances.js';
-import '../../ui/pages/info/info.js';
-import '../../ui/pages/not-found/not-found.js';
-import '../../ui/pages/transHistory/transHistory.js'
-import '../../ui/pages/createProject/createProject.js'
-import '../../ui/pages/browseProjects/browseProjects.js'
-import '../../ui/pages/project/project.js'
-import '../../ui/pages/profile/profile.js'
+import '/imports/ui/layouts/body/body.js';
+import '/imports/ui/pages/milestones/milestones.js';
+import '/imports/ui/pages/finances/finances.js';
+import '/imports/ui/pages/info/info.js';
+import '/imports/ui/pages/not-found/not-found.js';
+import '/imports/ui/pages/transHistory/transHistory.js'
+import '/imports/ui/pages/createProject/createProject.js'
+import '/imports/ui/pages/browseProjects/browseProjects.js'
+import '/imports/ui/pages/project/project.js'
+import '/imports/ui/pages/profile/profile.js'
 
 window.SubsCache = new SubsCache(5, 10);
 
