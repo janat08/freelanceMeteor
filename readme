@@ -1,11 +1,7 @@
 todo:
-yourbid once invited doesn't work, on project, the accept button doesnt show
-profit and loss isn't reactive, if accepting create request from manage transactions
-
-
-backlog:
 create milestones during the bid, test that bids are updated to bidding true, use function for retrieving all form values or track keyup to update reactiveVar for user's corrections
 test create milestone on bid
+
 
 //////////////////////////
 theres no overflow auto in chat
@@ -20,7 +16,7 @@ room message box isn't in mobile mode
 done:
 fix milestones finances accounting for canceled milestones, and grouping milestones, without username, show actions at inappropriate states (went for performance optimized code, and then forgot what I was doing)
 finances actions are weird
-remove your bid section when boss looks at the project
+remove your bid section when boss looks at the project, or if empty
 fix payments accordion in profit/loss
 fix time filters for profit/loss
 sort milestones by date in finances
@@ -31,12 +27,12 @@ test create project
 test profit/loss
 test project milestones
 transactions are duplicated if accepting request via manage transactions section (because parent event handler catches the event, although I specifically know that it shouldn't happen)
-
+milestone cancelation now counts againsts payments made in finances (creating and then canceling results in 0)
+fixed yourbid section
 
 defects:
-freelancers/bosses projects can't be found
-////////////////////////////////
-
+profit and loss isn't reactive, although I stuck reactive dependencies everywhere I could, and invoked tracker every which way
+freelancers/bosses projects in which they're already participating can't be found directly
 
 notes:
 hashtag search is exclusive (searching by 1, and 2, will exclude projects with just the 1 or the 2)

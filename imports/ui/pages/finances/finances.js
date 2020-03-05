@@ -20,12 +20,14 @@ var getNumber = (function() {
     return value;
   };
 })();
+
 function mapProject(projs) {
   return (x) => {
     Object.assign(x, { project: projs.filter(y => y._id == x.projectId)[0] })
     return x
   }
 }
+
 function mapUser(isBoss) {
   return x => {
     if (isBoss) {
@@ -36,6 +38,7 @@ function mapUser(isBoss) {
     }
   }
 }
+
 function mapMilestones(x) {
   if (x.releaseRequested) {
     x.status = "releaseRequested"
@@ -67,7 +70,6 @@ Template.finances.onCreated(function() {
   this.timeE = new Date()
   this.timeCha = new ReactiveVar(this.get())
 
-
   this.direction = new ReactiveVar(true)
   this.costOfSales = new ReactiveVar()
   this.positiveTransactions = new ReactiveVar()
@@ -78,23 +80,22 @@ Template.finances.onCreated(function() {
       //expenses
       const { timeCha, timeS, timeE } = this
       timeCha.get()
+      //for some reason this find() is required
+      const accountId = Meteor.user().accountId
+      Transactions.find({ $or: [{ sourceId: accountId }, { destinationId: accountId }] })
       this.autorun(() => {
-        const accountId = Meteor.user().accountId
         this.expenses.set(Transactions.find({ $and: [{ date: { $lte: timeE } }, { date: { $gte: timeS } }], sourceId: accountId, $or: [{ type: "membership" }, { type: "commissionEmployer" }] }).fetch())
       })
       //payments
       this.autorun(() => {
-        const accountId = Meteor.user().accountId
-        this.payments.set(Transactions.find({ $and: [{ date: { $lte: timeE } }, { date: { $gte: timeS } }], sourceId: accountId, $or: [{ type: "milestone create" }, { type: "other" }] }).fetch())
+        this.payments.set(Transactions.find({ $or: [{ $and: [{ date: { $lte: timeE } }, { date: { $gte: timeS } }], sourceId: accountId, $or: [{ type: "milestone create" }, { type: "other" }] }, { type: 'milestone cancel', destinationId: accountId }] }).fetch())
       })
       //positiveTransactions
       this.autorun(() => {
-        const accountId = Meteor.user().accountId
         this.positiveTransactions.set(Transactions.find({ $and: [{ date: { $lte: timeE } }, { date: { $gte: timeS } }], destinationId: accountId, $or: [{ type: "milestone" }] }).fetch())
       })
       //costOfSales
       this.autorun(() => {
-        const accountId = Meteor.user().accountId
         this.costOfSales.set(Transactions.find({ $and: [{ date: { $lte: timeE } }, { date: { $gte: timeS } }], sourceId: accountId, $or: [{ type: "commission" }, { type: "bid promotion" }] }).fetch())
       })
     }
@@ -111,7 +112,7 @@ Template.finances.helpers({
     }).fetch()
     const queryI = { projectId: { $in: projectsI.map(x => x._id) }, bidding: false }
     const queryO = { projectId: { $in: projectsO.map(x => x._id) }, bidding: false }
-    const proj = {sort: {date: -1}}
+    const proj = { sort: { date: -1 } }
     const incoming = Milestones.find(queryI, proj).fetch().map(mapProject(projectsI)).map(mapUser(true))
     const incomingCount = Milestones.find(queryI).count()
     const outgoing = Milestones.find(queryO, proj).fetch().map(mapProject(projectsO)).map(mapUser(false))
@@ -143,7 +144,17 @@ Template.finances.helpers({
   },
   payments() {
     const val = Template.instance().payments.get()
-    return { list: val, total: val.reduce((a, x) => { return a + x.amount }, 0) }
+    const a = {
+      list: val,
+      total: val.reduce((a, x) => {
+        if (x.type == 'milestone cancel') {
+          x.amount = x.amount * -1
+        }
+        return a + x.amount
+      }, 0)
+    }
+    console.log(a)
+    return a
   },
   expenses() {
     const val = Template.instance().expenses.get()
@@ -152,6 +163,9 @@ Template.finances.helpers({
   totalExpenses() {
     const { payments, expenses } = Template.instance()
     return payments.get().concat(expenses.get()).reduce((a, x) => {
+      if (x.type == 'milestone cancel') {
+        return a + x.amount * -1
+      }
       return a + x.amount
     }, 0)
   },

@@ -47,8 +47,8 @@ Meteor.methods({
         sourceId: escrow._id,
         destinationId: account._id,
         amount: milestone.price,
-        title: 'milestone',
-        type: 'milestone'
+        title: 'milestone cancel',
+        type: 'milestone cancel'
       })
       if (res == 'success') {
         Milestones.update(_id, { $set: { canceled: true, created: false, releaseRequested: false, requested: false } })
