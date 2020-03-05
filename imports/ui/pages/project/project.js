@@ -7,6 +7,7 @@ import '../milestones/milestones.js'
 Template.project.onCreated(function() {
   Meteor.subscribe('projects.all');
   Meteor.subscribe('users.all')
+  this.milestones = new ReactiveVar([])
 });
 
 Template.project.helpers({
@@ -33,13 +34,27 @@ Template.project.helpers({
     console.log(res.bids)
 
     return res
-  }
+  },
+  // milestones() {
+  //   return Template.instance().milestones
+  // }
 });
 
 Template.project.events({
+  // 'click .addMilestone'(e,t){
+
+  // },
+  // 'click .removeMilestone'(e,t){
+
+  // },
   'submit .bidJs' (event) {
     event.preventDefault()
-    const { description: { value: description }, price: { value: price } } = event.target
+    const {
+      description: {
+        value: description
+      },
+      price: { value: price }
+    } = event.target
     Meteor.call('projects.bid', { description, price, _id: FlowRouter.getParam('id') })
   },
   'click .inviteJs' (event) {

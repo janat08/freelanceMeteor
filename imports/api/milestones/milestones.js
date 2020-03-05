@@ -5,8 +5,8 @@ import { check } from 'meteor/check';
 import { Milestones, Projects, Users, Accounts } from '../cols.js';
 
 Meteor.methods({
-  'milestones.request' ({ title, price, projectId }) {
-    const _id = Milestones.insert({ title, price: price * 1, projectId, requested: true, })
+  'milestones.request' ({ title, price, projectId, bidding = false }) {
+    const _id = Milestones.insert({ date: new Date(), userId: this.userId, title, bidding, price: price * 1, projectId, requested: true, })
     const proj = Projects.findOne(projectId)
     if (proj.boss == this.userId) {
       Meteor.call('milestones.create', { _id })
@@ -29,9 +29,8 @@ Meteor.methods({
       title: 'milestone',
       type: 'milestone create'
     })
-    console.log(123, res)
     if (res == 'success') {
-      Milestones.update(_id, { $set: { created: true, requested: false } })
+      Milestones.update(_id, { $set: { created: true, requested: false, date: new Date() } })
     }
     else {
       return res
@@ -86,7 +85,7 @@ Meteor.methods({
       type: 'comission'
     })
     if (res == 'success' && res2 == 'success') {
-      Milestones.update(_id, { $set: { released: true, created: false, releaseRequested: false } })
+      Milestones.update(_id, { $set: { released: true, created: false, releaseRequested: false, requested: false } })
     }
     else {
       return res

@@ -2,7 +2,7 @@
 
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { Projects } from '../cols.js';
+import { Projects, Milestones } from '../cols.js';
 
 Meteor.methods({
   'projects.create' (info) {
@@ -20,6 +20,7 @@ Meteor.methods({
     const bid = proj.bids.find(x => x.userId == this.userId)
     if (!bid) throw new Meteor.Error('hasnt bid')
     if (!bid.invited) throw new Meteor.Error('not invited')
+    Milestones.update({projectId: _id, userId: userId}, {$set: {bidding: false}})
     return Projects.update({_id, "bids.userId": userId}, { $set: { "bids.$.won": true, complete: true, winner: bid, price: bid.price }})
   },
   'projects.invite' ({ userId, _id }) {

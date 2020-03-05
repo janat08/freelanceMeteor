@@ -11,8 +11,8 @@ Template.milestones.onCreated(function() {
 Template.milestones.helpers({
   milestones(status) {
     const id = FlowRouter.getParam('id')
-    const res = Milestones.find({[status]: true, 
-      projectId: id
+    const res = Milestones.find({[status]: true,
+      projectId: id, bidding: false
     }).fetch()
     console.log()
     return res.map(x=>{

@@ -5,7 +5,6 @@ import './financesMilestones.html';
 
 Template.financesMilestones.onCreated(function() {
   Meteor.subscribe('milestones.all');
-  console.log(this)
 });
 
 Template.financesMilestones.helpers({
@@ -13,25 +12,7 @@ Template.financesMilestones.helpers({
 });
 
 Template.financesMilestones.events({
-  'submit #requestMilestoneJs' (event) {
-    event.preventDefault();
-    const {
-      title: { value: tV },
-      price: { value: pV }
-    } = event.target;
-
-    Meteor.call('milestones.request', { title: tV, price: pV, projectId: 123 }, (error) => {
-      if (error) {
-        alert(error.error);
-      }
-      else {
-        event.target.title.value = '';
-        event.target.price.value = '';
-      }
-    });
-  },
   'click .createJs' (event, templ) {
-    console.log(this)
     Meteor.call('milestones.create', this)
   },
   'click .releaseRequestJs' (event, templ) {

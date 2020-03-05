@@ -1,13 +1,11 @@
 todo:
-stopped on create milstone/testing process
-test profit/loss
-test profit/loss filter
-test create project
-test project filters
-test profile
-test project milestones
-create milestones during the bid
 yourbid once invited doesn't work, on project, the accept button doesnt show
+profit and loss isn't reactive, if accepting create request from manage transactions
+transactions are duplicated if accepting request via manage transactions section
+
+backlog:
+create milestones during the bid, test that bids are updated to bidding true, use function for retrieving all form values or track keyup to update reactiveVar for user's corrections
+test create milestone on bid
 
 //////////////////////////
 theres no overflow auto in chat
@@ -20,9 +18,20 @@ room message box isn't in mobile mode
 ///////////////////////////
 
 done:
-milestones finances accounting for canceled milestones, and grouping milestones, without username, show actions at inappropriate states
+fix milestones finances accounting for canceled milestones, and grouping milestones, without username, show actions at inappropriate states (went for performance optimized code, and then forgot what I was doing)
 finances actions are weird
 remove your bid section when boss looks at the project
+fix payments accordion in profit/loss
+fix time filters for profit/loss
+sort milestones by date in finances
+test profit/loss filter
+test project filters (fix hashtag bug)
+test profile
+test create project
+test profit/loss
+test project milestones
+
+
 
 defects:
 freelancers/bosses projects can't be found
@@ -30,7 +39,7 @@ freelancers/bosses projects can't be found
 
 
 notes:
-
+hashtag search is exclusive (searching by 1, and 2, will exclude projects with just the 1 or the 2)
 ////////////////////////////////
 if a lot of messages are in chat, then it will ignore fixed height, and begin overflowing
 consider using condensed view by default

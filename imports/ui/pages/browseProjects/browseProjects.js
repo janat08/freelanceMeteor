@@ -33,7 +33,7 @@ Template.browseProjects.helpers({
     if (text.get()) {
       query.$or = [{ title: reg }, { description: reg }]
     }
-    if (sL){
+    if (sL && sL.length){
       query.skills = {$in: sL}
     }
     console.log(query)
