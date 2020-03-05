@@ -19,8 +19,9 @@ Template.financesMilestones.events({
     Meteor.call('milestones.releaseRequest', this)
   },
   'click .releaseJs' (event, templ) {
+    console.log('financesMilestones')
     Meteor.call('milestones.release', this)
-  },  
+  },
   'click .cancelJs' (event, templ) {
     Meteor.call('milestones.cancel', this)
   },

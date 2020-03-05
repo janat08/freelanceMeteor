@@ -1,7 +1,7 @@
 todo:
 yourbid once invited doesn't work, on project, the accept button doesnt show
 profit and loss isn't reactive, if accepting create request from manage transactions
-transactions are duplicated if accepting request via manage transactions section
+
 
 backlog:
 create milestones during the bid, test that bids are updated to bidding true, use function for retrieving all form values or track keyup to update reactiveVar for user's corrections
@@ -30,7 +30,7 @@ test profile
 test create project
 test profit/loss
 test project milestones
-
+transactions are duplicated if accepting request via manage transactions section (because parent event handler catches the event, although I specifically know that it shouldn't happen)
 
 
 defects:

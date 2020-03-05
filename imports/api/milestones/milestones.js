@@ -65,6 +65,7 @@ Meteor.methods({
     Milestones.update(_id, { $set: { created: false, releaseRequested: true, } })
   },
   'milestones.release' ({ _id }) {
+    console.log('called')
     const milestone = Milestones.findOne(_id)
     const proj = Projects.findOne(milestone.projectId)
     const worker = Users.findOne(proj.winner.userId)

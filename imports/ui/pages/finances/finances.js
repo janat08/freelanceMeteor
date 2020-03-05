@@ -179,18 +179,6 @@ Template.finances.events({
     templ.timeE = ev.target.value
     templ.timeCha.set(templ.gen())
   },
-  'click .createJs' (event, templ) {
-    Meteor.call('milestones.create', this)
-  },
-  'click .releaseRequestJs' (event, templ) {
-    Meteor.call('milestones.releaseRequest', this)
-  },
-  'click .releaseJs' (event, templ) {
-    Meteor.call('milestones.release', this)
-  },
-  'click .cancelJs' (event, templ) {
-    Meteor.call('milestones.cancel', this)
-  },
 });
 
 Template.finances.onRendered(function() {

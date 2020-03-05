@@ -35,8 +35,6 @@ Meteor.methods({
           }, function(err2, second) {
             return Transactions.update({ _id: _id }, { $set: { state: "committed" } },
               function(err3, third) {
-                console.log(2, second != 1 , third != 1 , err3 ,err2)
-                console.log(3, third != 1 , err3 , !err2 , second == 1)
                 if (second != 1 || third != 1 || err3 || err2) {
                   if (third != 1 || err3 && !err2 && second == 1) {
                     Accounts.update({
