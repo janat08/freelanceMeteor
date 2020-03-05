@@ -1,7 +1,7 @@
 <template name="financesMilestones">
 <table class="table">
     <tr>
-        <th>Employer</th>
+        <th>Partner</th>
         <th>Project Name</th>
         <th>Amount</th>
         <th>Title</th>
@@ -11,7 +11,7 @@
         {{#each milestones}}
     <tr>
         <td>
-            {{username}}
+            <a href="/profile/{{partner._id}}">{{partner.username}}</a>
         </td>
         <td>
             <a href='/project/{{project._id}}'>{{project.title}}</a>
@@ -26,7 +26,8 @@
             {{status}} 
         </td>
         <td>
-              {{#unless released}}
+{{#unless released}}
+{{#unless canceled}}
     <div class="dropdown">
   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     Actions
@@ -46,7 +47,8 @@
     {{/if}}
   </div>
 </div>
-      {{/unless}}
+{{/unless}}
+{{/unless}}
         
         </td>
     </tr>

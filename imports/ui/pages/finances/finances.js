@@ -66,25 +66,37 @@ Template.finances.onCreated(function() {
   })
 });
 
+function mapProject(projs) {
+  return (x) => {
+    Object.assign(x, { project: projs.filter(y => y._id == x.projectId)[0] })
+    return x
+  }
+}
+
+function mapUser(isBoss) {
+  return x => {
+    if (isBoss) {
+      return Object.assign(x, { partner: Users.findOne(x.project.boss) })
+    }
+    else {
+      return Object.assign(x, { partner: Users.findOne(x.project.winner.userId) })
+    }
+  }
+}
+
 Template.finances.helpers({
   milestones() {
     const projectsO = Projects.find({
       boss: Meteor.userId()
-    }).fetch().map(x => {
-      Object.assign(x, Milestones.findOne({ projectId: x._id }))
-      return x
-    })
+    }).fetch()
     const projectsI = Projects.find({
       'winner.userId': Meteor.userId()
-    }).fetch().map(x => {
-      console.log(123, x._id, Milestones.findOne({ projectId: x._id }))
-      return Object.assign({ project: x }, Milestones.findOne({ projectId: x._id }), { username: Users.findOne(x.boss).username })
-    })
+    }).fetch()
     const queryI = { projectId: { $in: projectsI.map(x => x._id) } }
     const queryO = { projectId: { $in: projectsO.map(x => x._id) } }
-    const incoming = Milestones.find(queryI).fetch()
+    const incoming = Milestones.find(queryI).fetch().map(mapProject(projectsI)).map(mapUser(true))
     const incomingCount = Milestones.find(queryI).count()
-    const outgoing = Milestones.find(queryO).fetch()
+    const outgoing = Milestones.find(queryO).fetch().map(mapProject(projectsO)).map(mapUser(false))
     const outgoingCount = Milestones.find(queryO).count()
     //todo: differentiate incoming/outgoing through projectId
     const ins = Template.instance()
@@ -93,16 +105,15 @@ Template.finances.helpers({
     const result = {
       incoming: {
         active: dir,
-        mapped: projectsI.map(mapMilestones),
-        count: projectsI.length
+        mapped: incoming.map(mapMilestones),
+        count: incomingCount
       },
       outgoing: {
         active: !dir,
-        mapped: projectsO.map(mapMilestones).map(x=>{x.isBoss = true; return x}),
-        count: projectsO.length
+        mapped: outgoing.map(mapMilestones).map(x => { x.isBoss = true; return x }),
+        count: outgoingCount
       }
     }
-    console.log(result.incoming.mapped)
     return result
   },
   costOfSales() {
@@ -137,9 +148,7 @@ Template.finances.helpers({
 });
 
 function mapMilestones(x) {
-  //todo: look for project, and bossid, to determine if can approve
-  x.isBoss = Math.random() >= 0.5
-
+  console.log(x)
   if (x.releaseRequested) {
     x.status = "releaseRequested"
     x.actions = []
@@ -152,6 +161,9 @@ function mapMilestones(x) {
   }
   else if (x.released) {
     x.status = "released"
+  }
+  else if (x.canceled) {
+    x.status = "canceled"
   }
   return x
 }
