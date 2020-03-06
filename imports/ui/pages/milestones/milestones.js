@@ -6,6 +6,8 @@ import './milestones.html';
 Template.milestones.onCreated(function() {
   Meteor.subscribe('milestones.all');
   Meteor.subscribe('projects.all');
+  Meteor.subscribe('users.all');
+  console.log('milestones')
 });
 
 Template.milestones.helpers({
@@ -14,12 +16,10 @@ Template.milestones.helpers({
     const res = Milestones.find({[status]: true,
       projectId: id, bidding: false
     }).fetch()
-    console.log()
     return res.map(x=>{
       x.isBoss = Projects.findOne(id).boss == Meteor.userId()
       return x
     })
-    return []
   },
 });
 

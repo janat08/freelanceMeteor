@@ -20,7 +20,7 @@ Meteor.methods({
     const bid = proj.bids.find(x => x.userId == this.userId)
     if (!bid) throw new Meteor.Error('hasnt bid')
     if (!bid.invited) throw new Meteor.Error('not invited')
-    Milestones.update({projectId: _id, userId: userId}, {$set: {bidding: false}})
+    Milestones.update({projectId: _id, userId: userId}, {$set: {bidding: false}}, {multi: true})
     return Projects.update({_id, "bids.userId": userId}, { $set: { "bids.$.won": true, complete: true, winner: bid, price: bid.price }})
   },
   'projects.invite' ({ userId, _id }) {

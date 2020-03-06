@@ -1,0 +1,49 @@
+<template name="dashboard">
+  <h3>Projects as Boss</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Price</th>
+      <th scope="col">Skills</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+{{#each projectsBoss}}
+
+    <tr>
+      <td><a href='/project/{{_id}}'>{{title}}</a></td>
+      <td>{{price}}</td>
+      <td>{{skills}}</td>
+      <td>{{date}}</td>
+    </tr>
+
+{{/each}}
+    </tbody>
+</table>
+  <h3>Projects as Worker</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col">Price</th>
+      <th scope="col">Skills</th>
+      <th scope="col">Date</th>
+    </tr>
+  </thead>
+  <tbody>
+{{#each projectsWorker}}
+
+    <tr>
+      <td><a href='/project/{{_id}}'>{{title}}</a></td>
+      <td>{{price}}</td>
+      <td>{{skills}}</td>
+      <td>{{date}}</td>
+    </tr>
+
+{{/each}}
+    </tbody>
+</table>
+</template>

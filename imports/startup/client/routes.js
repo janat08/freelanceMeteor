@@ -12,6 +12,7 @@ import '/imports/ui/pages/createProject/createProject.js'
 import '/imports/ui/pages/browseProjects/browseProjects.js'
 import '/imports/ui/pages/project/project.js'
 import '/imports/ui/pages/profile/profile.js'
+import '/imports/ui/pages/dashboard/dashboard.js'
 
 window.SubsCache = new SubsCache(5, 10);
 
@@ -55,6 +56,13 @@ FlowRouter.route('/projects', {
   name: 'App.projects',
   action() {
     BlazeLayout.render('App_body', { main: 'browseProjects' });
+  },
+});
+
+FlowRouter.route('/dashboard', {
+  name: 'App.dashboard',
+  action() {
+    BlazeLayout.render('App_body', { main: 'dashboard' });
   },
 });
 

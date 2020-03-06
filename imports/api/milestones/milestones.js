@@ -6,6 +6,7 @@ import { Milestones, Projects, Users, Accounts } from '../cols.js';
 
 Meteor.methods({
   'milestones.request' ({ title, price, projectId, bidding = false }) {
+    console.log('req', title, bidding)
     const _id = Milestones.insert({ date: new Date(), userId: this.userId, title, bidding, price: price * 1, projectId, requested: true, })
     const proj = Projects.findOne(projectId)
     if (proj.boss == this.userId) {

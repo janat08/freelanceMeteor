@@ -1,13 +1,18 @@
 import { Meteor } from 'meteor/meteor';
 import './project.html';
-import { Projects, Users } from '/imports/api/cols.js'
+import { Projects, Users, Milestones } from '/imports/api/cols.js'
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import '../milestones/milestones.js'
 
 Template.project.onCreated(function() {
   Meteor.subscribe('projects.all');
   Meteor.subscribe('users.all')
-  this.milestones = new ReactiveVar([])
+  Meteor.subscribe('milestones.all')
+  this.milestones = []
+  this.milestonesChange = new ReactiveVar(true)
+  // this.autorun(()=>{
+  //   console.log(Meteor.userId(), Milestones.find({userId: Meteor.userId(), projectId: FlowRouter.getParam('id') }).fetch())
+  // })
 });
 
 Template.project.helpers({
@@ -32,26 +37,56 @@ Template.project.helpers({
       return x
     })[0]
   },
-  // milestones() {
-  //   return Template.instance().milestones
-  // }
+  milestonesBidding() {
+    Template.instance().milestonesChange.get()
+    return Template.instance().milestones
+  }
 });
 
 Template.project.events({
-  // 'click .addMilestone'(e,t){
+  'click .openMilestonesJs'(e,t){
+    alert(
+      Milestones.find({userId: this.userId, projectId: FlowRouter.getParam('id') }).fetch()
+      .reduce((a,x)=>{
+        return a + "  "+ x.title + " " + x.price
+      }, "")
+      )
+  },
+  'click .deleteJs' (event, t) {
+    t.milestones.splice(this.ind, 1)
+    t.milestones.map((x,i)=>{
+      x.ind = i
+      return x
+    })
+    t.milestonesChange.set(!t.milestonesChange.get())
+  },
+  'submit .milestoneJs' (event, t) {
+    event.preventDefault()
+    const {
+      title: {
+        value: title
+      },
+      price: { value: price }
+    } = event.target
 
-  // },
-  // 'click .removeMilestone'(e,t){
-
-  // },
-  'submit .bidJs' (event) {
+    t.milestones.push({ price, title, ind: t.milestones.length })
+    t.milestonesChange.set(!t.milestonesChange.get())
+  },
+  'submit .bidJs' (event, t) {
     event.preventDefault()
     const {
       description: {
         value: description
       },
-      price: { value: price }
     } = event.target
+    //todo
+    t.milestones.forEach(x => {
+      delete x.ind
+      Meteor.call('milestones.request', Object.assign(x, { bidding: true, projectId: FlowRouter.getParam('id') }))
+    })
+    const price = t.milestones.reduce((a, x)=>{
+      return a + x.price*1
+    }, 0)
     Meteor.call('projects.bid', { description, price, _id: FlowRouter.getParam('id') })
   },
   'click .inviteJs' (event) {
