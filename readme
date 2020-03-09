@@ -19,10 +19,12 @@ fixed yourbid section
 freelancers/bosses projects in which they're already participating can't be found directly
 create milestones during the bid
 make milestones visible through price link
-defects:
-profit and loss isn't reactive, although I stuck reactive dependencies everywhere I could, and invoked tracker every which way
 test create milestone on bid
 navbar js, won't close on select
+
+defects:
+profit and loss isn't reactive, although I stuck reactive dependencies everywhere I could, and invoked tracker every which way
+
 
 
 notes:
